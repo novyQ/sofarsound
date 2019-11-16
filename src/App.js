@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import AppHeader from "./AppHeader/AppHeader";
+//import logo from "./logo.svg";
+import { AppWrapper } from "./App.styled";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  state = {};
+
+  componentDidMount = async () => {
+    fetch("https://app.staging.sofarsounds.com/api/v1/events")
+      .then(res => res.json())
+      .then(
+        result => {
+          this.setState({
+            events: result
+          });
+        },
+        error => {
+          console.log("error", error);
+        }
+      );
+  };
+
+  render() {
+    console.log("events", this.state.events);
+    return (
+      <AppWrapper>
+        <AppHeader />
+      </AppWrapper>
+    );
+  }
 }
 
 export default App;
