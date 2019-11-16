@@ -1,7 +1,7 @@
 import React from "react";
 import AppHeader from "./AppHeader/AppHeader";
-//import logo from "./logo.svg";
-import { AppWrapper } from "./App.styled";
+import EventItem from "./EventItem/EventItem";
+import { AppWrapper, EventsContainer } from "./App.styled";
 
 class App extends React.Component {
   state = {};
@@ -26,6 +26,16 @@ class App extends React.Component {
     return (
       <AppWrapper>
         <AppHeader />
+        <div>Search bar</div>
+        <EventsContainer>
+          {this.state.events ? (
+            this.state.events.map(event => (
+              <EventItem {...event} key={event.id} />
+            ))
+          ) : (
+            <div>Loading</div>
+          )}
+        </EventsContainer>
       </AppWrapper>
     );
   }

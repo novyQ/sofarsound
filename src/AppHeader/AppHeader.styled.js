@@ -7,8 +7,8 @@ export const AppHeaderWrapper = styled.div`
   background-image: url(${header});
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: 0% 40%;
-  height: 400px;
+  background-position: 0% 30%;
+  height: 300px;
   width: 100%;
   position: relative;
 `;
@@ -20,8 +20,8 @@ export const StyledLogo = styled(Logo)`
 
 export const HeaderText = styled.div`
   color: white;
-  font-size: 70px;
-  font-weight: 900;
+  font-size: 60px;
+  font-weight: 800;
   margin: 0;
   position: absolute;
   top: 50%;
