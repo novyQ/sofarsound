@@ -11,6 +11,13 @@ export const AppWrapper = styled.div`
   font-style: Open Sans;
 `;
 
+export const Load = styled.div`
+  text-align: center;
+  margin-top: 200px;
+  color: #10ad52;
+  font-weight: 600;
+`;
+
 export const EventsContainer = styled.div`
   display: grid;
   width: 700px;

@@ -1,5 +1,4 @@
 import React from "react";
-import Moment from "react-moment";
 import { timeFormat } from "../helper";
 import {
   EventWrapper,
@@ -10,15 +9,22 @@ import {
   City
 } from "./EventItem.styles";
 
-const EventItem = props => {
+interface EventProps {
+  image_url: string;
+  start_time: string;
+  arrival_time: string;
+  city: string;
+}
+
+const EventItem = (props: EventProps) => {
   return (
     <EventWrapper>
       <StyledImage src={`${props.image_url}`} />
       <EventInfoContainer>
         <StyledDate date={props.start_time} format='dddd, Do MMMM YYYY' />
-        <ArrivalTime>{`Door opens at ${timeFormat(
-          props.arrival_time
-        )}`}</ArrivalTime>
+        <ArrivalTime>
+          {`Door opens at ${timeFormat(props.arrival_time)}`}
+        </ArrivalTime>
         <City>{props.city}</City>
       </EventInfoContainer>
     </EventWrapper>

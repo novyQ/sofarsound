@@ -2,10 +2,11 @@ import React from "react";
 import moment from "moment";
 
 import AppHeader from "./AppHeader/AppHeader";
-import EventItem from "./EventItem/EventItem";
+import EventItem from "./EventItem/EventItem.tsx";
 import { uniqBy } from "lodash";
 import {
   AppWrapper,
+  Load,
   EventsContainer,
   SearchBarContainer,
   SearchBar,
@@ -19,7 +20,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 class App extends React.Component {
   state = {
-    events: [],
+    events: null,
     filteredEvents: [],
     searchClicked: false,
     selectedCity: null,
@@ -96,7 +97,7 @@ class App extends React.Component {
       ? this.state.filteredEvents
       : this.state.events;
 
-    if (!this.state.events) return <div>Loading</div>;
+    if (!this.state.events) return <Load>Loading...</Load>;
 
     return (
       <AppWrapper>
