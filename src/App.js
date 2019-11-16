@@ -106,7 +106,12 @@ class App extends React.Component {
         <SearchBarContainer>
           <SearchBar>
             <StyledCitySelect
-              value={this.state.selectedCity && this.state.selectedCity}
+              value={
+                this.state.selectedCity && {
+                  value: this.state.selectedCity,
+                  label: this.state.selectedCity
+                }
+              }
               options={uniqBy(cityFilterOptions, "value")}
               onChange={this.handleCitySelect}
               placeholder='Filter by City'
