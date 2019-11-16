@@ -12,5 +12,4 @@ export const EventsContainer = styled.div`
   grid-auto-flow: row;
   grid-gap: 40px;
   padding: 32px 64px;
-  background-color: grey;
 `;
