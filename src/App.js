@@ -26,7 +26,7 @@ class App extends React.Component {
     selectedDate: null
   };
 
-  componentDidMount = async () => {
+  componentDidMount = () => {
     fetch("https://app.staging.sofarsounds.com/api/v1/events")
       .then(res => res.json())
       .then(
@@ -85,8 +85,6 @@ class App extends React.Component {
   };
 
   render() {
-    console.log("events", this.state.events);
-
     const cityFilterOptions =
       this.state.events &&
       this.state.events.map(event => ({
@@ -139,7 +137,11 @@ class App extends React.Component {
               <EventItem {...event} key={event.id} />
             ))
           ) : (
-            <div>No search result available, please reset your filter</div>
+            <div>
+              No search result available,
+              <br />
+              please reset your filters.
+            </div>
           )}
         </EventsContainer>
       </AppWrapper>
