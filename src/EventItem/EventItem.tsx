@@ -14,11 +14,17 @@ interface EventProps {
   start_time: string;
   arrival_time: string;
   city: string;
+  event_url: string;
 }
 
 const EventItem = (props: EventProps) => {
+  const handleEventClick = () => {
+    window.open(props.event_url, "_blank");
+  };
+
+  console.log("props", props);
   return (
-    <EventWrapper>
+    <EventWrapper onClick={handleEventClick}>
       <StyledImage src={`${props.image_url}`} />
       <EventInfoContainer>
         <StyledDate date={props.start_time} format='dddd, Do MMMM YYYY' />
