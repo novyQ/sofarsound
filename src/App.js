@@ -1,16 +1,15 @@
 import React from "react";
 import moment from "moment";
-import DatePicker from "react-datepicker";
 
 import AppHeader from "./AppHeader/AppHeader";
 import EventItem from "./EventItem/EventItem";
-import CitySelect from "./CitySelect/CitySelect";
 import { uniqBy } from "lodash";
 import {
   AppWrapper,
   EventsContainer,
   SearchBarContainer,
   SearchBar,
+  StyledCitySelect,
   StyledDatePicker,
   ResetFilters,
   SearchButton
@@ -99,17 +98,22 @@ class App extends React.Component {
       ? this.state.filteredEvents
       : this.state.events;
 
+    if (!this.state.events) return <div>Loading</div>;
+
     return (
       <AppWrapper>
         <AppHeader />
         <SearchBarContainer>
           <SearchBar>
-            <CitySelect
-              value={this.state.selectedCity}
-              placeholder='Filter by City'
+            <StyledCitySelect
+              value={this.state.selectedCity && this.state.selectedCity}
               options={uniqBy(cityFilterOptions, "value")}
               onChange={this.handleCitySelect}
+              placeholder='Filter by City'
+              closeMenuOnSelect
+              hideSelectedOptions={false}
             />
+
             <StyledDatePicker
               selected={this.state.selectedDate}
               onChange={this.handleDateSelect}
@@ -125,12 +129,12 @@ class App extends React.Component {
           </SearchBar>
         </SearchBarContainer>
         <EventsContainer>
-          {this.state.events ? (
+          {displayedEvents.length > 0 ? (
             displayedEvents.map(event => (
               <EventItem {...event} key={event.id} />
             ))
           ) : (
-            <div>Loading...</div>
+            <div>No search result available, please reset your filter</div>
           )}
         </EventsContainer>
       </AppWrapper>

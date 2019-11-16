@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import ReactSelect from "react-select";
 import DatePicker from "react-datepicker";
 
 export const AppWrapper = styled.div`
@@ -7,6 +8,7 @@ export const AppWrapper = styled.div`
   align-items: center;
   width: 100%;
   font-size: 11px;
+  font-style: Open Sans;
 `;
 
 export const EventsContainer = styled.div`
@@ -14,7 +16,7 @@ export const EventsContainer = styled.div`
   width: 700px;
   grid-template-columns: 200px 200px 200px;
   grid-auto-flow: row;
-  grid-gap: 50px;
+  grid-column-gap: 50px;
   grid-row-gap: 40px;
   padding: 32px 64px;
 `;
@@ -39,7 +41,12 @@ export const SearchButton = styled.button`
   padding: 11px 36px;
   margin-left: auto;
   color: white;
-  background-color: #4baf50;
+  background-color: #10ad52;
+  cursor: pointer;
+`;
+
+export const StyledCitySelect = styled(ReactSelect)`
+  width: 160px;
 `;
 
 export const StyledDatePicker = styled(DatePicker)`
@@ -52,4 +59,6 @@ export const StyledDatePicker = styled(DatePicker)`
 export const ResetFilters = styled.div`
   margin-left: 180px;
   display: ${props => !props.isShown && "none"};
+  color: #474747;
+  cursor: pointer;
 `;
