@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import DatePicker from "react-datepicker";
 
 import AppHeader from "./AppHeader/AppHeader";
@@ -8,7 +9,10 @@ import { uniqBy } from "lodash";
 import {
   AppWrapper,
   EventsContainer,
+  SearchBarContainer,
   SearchBar,
+  StyledDatePicker,
+  ResetFilters,
   SearchButton
 } from "./App.styled";
 
@@ -17,8 +21,10 @@ import "react-datepicker/dist/react-datepicker.css";
 class App extends React.Component {
   state = {
     events: [],
+    filteredEvents: [],
     searchClicked: false,
-    filteredEvents: []
+    selectedCity: null,
+    selectedDate: null
   };
 
   componentDidMount = async () => {
@@ -43,20 +49,39 @@ class App extends React.Component {
   };
 
   handleDateSelect = date => {
-    console.log("selected date", date);
     this.setState({
       selectedDate: date
     });
   };
 
   handleSearchClick = () => {
-    console.log("select city", this.state.selectedCity);
-    const filteredEvents = this.state.events.filter(
-      event => event.city === this.state.selectedCity
-    );
+    let filteredEvents = this.state.events;
+
+    if (this.state.selectedCity) {
+      filteredEvents = this.state.events.filter(
+        event => event.city === this.state.selectedCity
+      );
+    }
+
+    if (this.state.selectedDate) {
+      filteredEvents = this.state.events.filter(event => {
+        const eventDate = moment(new Date(event.start_time), "MM/DD/YYYY");
+        const selectedDate = moment(this.state.selectedDate, "MM/DD/YYYY");
+        return eventDate.isSame(selectedDate, "date") === true;
+      });
+    }
+
     this.setState({
       searchClicked: true,
       filteredEvents
+    });
+  };
+
+  handleResetFilters = () => {
+    this.setState({
+      searchClicked: false,
+      selectedCity: null,
+      selectedDate: null
     });
   };
 
@@ -70,34 +95,42 @@ class App extends React.Component {
         label: event.city
       }));
 
-    const displayedEvents =
-      this.state.selectedCity && this.state.searchClicked
-        ? this.state.filteredEvents
-        : this.state.events;
+    const displayedEvents = this.state.searchClicked
+      ? this.state.filteredEvents
+      : this.state.events;
 
     return (
       <AppWrapper>
         <AppHeader />
-        <SearchBar>
-          <CitySelect
-            placeholder='Filter by City'
-            options={uniqBy(cityFilterOptions, "value")}
-            onChange={this.handleCitySelect}
-          />
-          <DatePicker
-            selected={this.state.selectedDate}
-            onChange={this.handleDateSelect}
-            placeholderText='Filter by Date'
-          />
-          <SearchButton onClick={this.handleSearchClick}>Search</SearchButton>
-        </SearchBar>
+        <SearchBarContainer>
+          <SearchBar>
+            <CitySelect
+              value={this.state.selectedCity}
+              placeholder='Filter by City'
+              options={uniqBy(cityFilterOptions, "value")}
+              onChange={this.handleCitySelect}
+            />
+            <StyledDatePicker
+              selected={this.state.selectedDate}
+              onChange={this.handleDateSelect}
+              placeholderText='Filter by Date'
+            />
+            <ResetFilters
+              onClick={this.handleResetFilters}
+              isShown={this.state.selectedCity || this.state.selectedDate}
+            >
+              Reset Filters
+            </ResetFilters>
+            <SearchButton onClick={this.handleSearchClick}>Search</SearchButton>
+          </SearchBar>
+        </SearchBarContainer>
         <EventsContainer>
           {this.state.events ? (
             displayedEvents.map(event => (
               <EventItem {...event} key={event.id} />
             ))
           ) : (
-            <div>Loading</div>
+            <div>Loading...</div>
           )}
         </EventsContainer>
       </AppWrapper>
