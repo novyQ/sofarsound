@@ -58,13 +58,13 @@ class App extends React.Component {
     let filteredEvents = this.state.events;
 
     if (this.state.selectedCity) {
-      filteredEvents = this.state.events.filter(
+      filteredEvents = filteredEvents.filter(
         event => event.city === this.state.selectedCity
       );
     }
 
     if (this.state.selectedDate) {
-      filteredEvents = this.state.events.filter(event => {
+      filteredEvents = filteredEvents.filter(event => {
         const eventDate = moment(new Date(event.start_time), "MM/DD/YYYY");
         const selectedDate = moment(this.state.selectedDate, "MM/DD/YYYY");
         return eventDate.isSame(selectedDate, "date") === true;
